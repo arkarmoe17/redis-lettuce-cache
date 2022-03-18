@@ -9,4 +9,6 @@ public interface UserService {
     ResponseEntity<?> findAll();
 
     ResponseEntity<?> findById(Long id);
+
+    ResponseEntity<?> delete(Long id);
 }

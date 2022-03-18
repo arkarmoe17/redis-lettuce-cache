@@ -55,4 +55,18 @@ public class UserRedisService {
         }
         return user;
     }
+
+    public Long deleteHashById(String id){
+        Long flag=null;
+        boolean hexists = cacheService.getUserStatefulRedisConnection().sync().hexists("userHash", id);
+        System.out.println("existing :" + hexists);
+        if (hexists) {
+            flag = cacheService.getUserStatefulRedisConnection().sync().hdel("userHash", id);
+            System.out.println("flag : "+flag);
+            return flag;
+        }
+        return flag;
+    }
+
+
 }

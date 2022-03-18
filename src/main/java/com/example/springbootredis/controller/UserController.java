@@ -29,4 +29,9 @@ public class UserController {
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         return userService.findById(id);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        return userService.delete(id);
+    }
 }

@@ -45,4 +45,10 @@ public class UserServiceImpl implements UserService {
         User user = userRedisService.getHashById(String.valueOf(id));
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<?> delete(Long id) {
+        Long val = userRedisService.deleteHashById(String.valueOf(id));
+        return new ResponseEntity<>(val,HttpStatus.OK);
+    }
 }

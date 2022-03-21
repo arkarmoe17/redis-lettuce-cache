@@ -1,7 +1,9 @@
 package com.example.springbootredis.externalService;
 
+import com.example.springbootredis.codec.SecurityQuestionSerializationCodec;
 import com.example.springbootredis.codec.TypeValueCodec;
 import com.example.springbootredis.codec.UserSerializationCodec;
+import com.example.springbootredis.model.entity.SecurityQuestion;
 import com.example.springbootredis.model.entity.User;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
@@ -20,6 +22,7 @@ public class CacheService {
     private StatefulRedisConnection<String, String> stringStatefulRedisConnection = null;
     private StatefulRedisConnection<String, User> userStatefulRedisConnection = null;
     private StatefulRedisConnection<String, Object> typeValueRedisConnection = null;
+    private StatefulRedisConnection<String, SecurityQuestion> securityQuestionStatefulRedisConnection = null;
 
 
     @PostConstruct
@@ -29,6 +32,7 @@ public class CacheService {
         stringStatefulRedisConnection = redisClient.connect();
         userStatefulRedisConnection = redisClient.connect(new UserSerializationCodec());
         typeValueRedisConnection = redisClient.connect(new TypeValueCodec());
+        securityQuestionStatefulRedisConnection = redisClient.connect(new SecurityQuestionSerializationCodec());
     }
 
     @PreDestroy
@@ -42,6 +46,9 @@ public class CacheService {
         }
         if (typeValueRedisConnection != null) {
             typeValueRedisConnection.close();
+        }
+        if (securityQuestionStatefulRedisConnection != null) {
+            securityQuestionStatefulRedisConnection.close();
         }
         if (redisClient != null) {
             redisClient.shutdown();

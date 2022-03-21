@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -33,6 +34,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> findAll() {
 //        List<User> users = userRedisService.getFromLists();
+        List<String> keys = userRedisService.getHashKeys();
+        keys.forEach(System.out::println);
         Map<String, User> userMaps = userRedisService.getHash();
         if (userMaps == null) {
             return new ResponseEntity<>(null, HttpStatus.OK);
